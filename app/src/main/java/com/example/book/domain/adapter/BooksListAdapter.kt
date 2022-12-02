@@ -18,11 +18,11 @@ class BooksListAdapter: RecyclerView.Adapter<BooksListAdapter.BooksListViewHolde
 
     class BooksListViewHolder(view: View): RecyclerView.ViewHolder(view)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BooksListAdapter.BooksListViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BooksListViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_book,parent, false)
         return BooksListViewHolder(view)
     }
-    override fun onBindViewHolder(holder: BooksListAdapter.BooksListViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BooksListViewHolder, position: Int) {
         holder.itemView.tvTitle.text = listBooks[position].volumeInfo.title
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, DetailsBook::class.java)

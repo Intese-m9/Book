@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.book.R
 import com.example.book.domain.adapter.BooksListAdapter
@@ -22,23 +21,25 @@ class MainActivity : AppCompatActivity() {
 
             list.body()?.let {adapter.setList(it.items)}
         }
-        viewModel.userResponseLiveData.observe(this, Observer {
+        viewModel.userResponseLiveData.observe(this) {
             progressBar.isVisible = false
-            when(it){
-               is NetworkResult.Success -> {
-                   Toast.makeText(applicationContext, "Данные загружены", Toast.LENGTH_SHORT).show()
-               }
-               is NetworkResult.Error -> {
-                  Toast.makeText(applicationContext, "Возникла ошибка!", Toast.LENGTH_SHORT).show()
+            when (it) {
+                is NetworkResult.Success -> {
+                    Toast.makeText(applicationContext, "Данные загружены", Toast.LENGTH_SHORT)
+                        .show()
+                }
+                is NetworkResult.Error -> {
+                    Toast.makeText(applicationContext, "Возникла ошибка!", Toast.LENGTH_SHORT)
+                        .show()
 
-               }
-               is NetworkResult.Loading -> {
-                   progressBar.isVisible = true
+                }
+                is NetworkResult.Loading -> {
+                    progressBar.isVisible = true
 
-               }
+                }
 
             }
-        })
+        }
         rv_book.adapter = adapter
         searchButton.setOnClickListener {
             viewModel.getBooks(search.text.toString())
